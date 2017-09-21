@@ -1,13 +1,40 @@
 define(['jquery','template'], function ($,template) {
-    //µ÷ÓÃºóÌ¨½Ó¿Ú»ñÈ¡ËùÓĞµÄ½²Ê¦Êı¾İ
+    //ï¿½ï¿½ï¿½Ãºï¿½Ì¨ï¿½Ó¿Ú»ï¿½È¡ï¿½ï¿½ï¿½ĞµÄ½ï¿½Ê¦ï¿½ï¿½ï¿½ï¿½
     $.ajax({
         type:'get',
         url:'/api/teacher',
         dataType:'json',
         success:function(data){
-            //½âÎöÊı¾İ£¬äÖÈ¾Ò³Ãæ
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½È¾Ò³ï¿½ï¿½
             var html =template('teacherTpl',{list:data.result});
             $('#teacherInfo').html(html);
+            
+            //ï¿½ï¿½ï¿½Ãºï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            $('.eod').click(function () {
+                var that=this;
+                var td =$(this).closest('td');
+                var tcId=td.attr('data-tcId');
+                var tcStatus=td.attr('data-status');
+                $.ajax({
+                    type:'post',
+                    url:'/api/teacher/handle',
+                    data:{
+                        tc_id:tcId,
+                        tc_status:tcStatus
+                    },
+                    dataType:'json',
+                    success: function (data) {
+                        if(data.code == 200){
+                            td.attr('data-status',data.result.tc_status);
+                            if(data.result.tc_status == 0){
+                                $(that).text('å¯ç”¨');
+                            }else{
+                                $(that).text('æ³¨é”€');
+                            }
+                        }
+                    }
+                });
+            })   
         }
     });
 });
