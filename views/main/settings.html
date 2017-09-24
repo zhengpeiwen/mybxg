@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>学IT - 后台管理系统</title>
     <?php include('./views/common/style.html'); ?>
-    <link rel="stylesheet" href="/public/assets/bootstrap-datepicker/css/bootstrap-datepicker.css"/>;
+    <link rel="stylesheet" href="/public/assets/bootstrap-datepicker/css/bootstrap-datepicker.css"/>
 </head>
 <body>
     
@@ -24,11 +24,12 @@
         </div>
     </div>
     <script type="text/html" id="settingsTpl">
-        <form action="" class="form-horizontal">
+        <form id="settingsForm" class="form-horizontal">
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">姓名</label>
                 <div class="col-xs-5">
                     <p class="form-control-static">{{tc_name}}</p>
+                    <input type="hidden" name="tc_id" value="{{tc_id}}"/>
                 </div>
             </div>
             <div class="form-group">
@@ -73,13 +74,13 @@
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">籍贯</label>
                 <div class="col-xs-5" id="pcd">
-                    <select data-id="{{tc_province}}" id="p" name="" class="form-control input-sm">
+                    <select data-id="{{tc_province}}" id="p" name="tc_province" class="form-control input-sm">
                         <option value="">请选择省....</option>
                     </select>
-                    <select data-id="{{tc_city}}" id="c" name="" class="form-control input-sm">
+                    <select data-id="{{tc_city}}" id="c" name="tc_city" class="form-control input-sm">
                         <option value="">请选择市....</option>
                     </select>
-                    <select data-id="{{tc_district}}" id="d" name="" class="form-control input-sm">
+                    <select data-id="{{tc_district}}" id="d" name="tc_district" class="form-control input-sm">
                         <option value="">请选择区/县....</option>
                     </select>
                 </div>
