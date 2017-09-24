@@ -1,13 +1,27 @@
-define(['jquery','template'], function ($,template) {
-    //调用接口 获取所有的个人信息
-    $.ajax({
-        type:'get',
-        url:'/api/teacher/profile',
-        dataType:'json',
-        success: function (data) {
-            //解析数据 渲染页面
-            var html=template('settingsTpl',data.result);
-            $('#settingsInfo').html(html);
-        }
-    });
+define(['jquery','template','uploadify'], function ($,template) {
+  //璋冪敤鎺ュ彛 鑾峰彇鎵�鏈夌殑涓汉淇℃伅
+  $.ajax({
+      type:'get',
+      url:'/api/teacher/profile',
+      dataType:'json',
+      success: function (data) {
+          //瑙ｆ瀽鏁版嵁 娓叉煋椤甸潰
+          var html=template('settingsTpl',data.result);
+          $('#settingsInfo').html(html);
+          //澶勭悊澶村儚涓婁紶
+          $('#upfile').uploadify({
+              width:120,
+              height:120,
+              buttonText:'',
+              itemTemplate:'<span></span>',
+              swf:'/public/assets/uploadify/uploadify.swf',
+              uploader:'/api/uploader/avatar',
+              fileObjName:'tc_avatar',
+              onUploadSuccess: function (a,b) {
+                  var obj= JSON.parse(b.trim());
+                  $('.preview img').attr('src',obj.result.path);
+              }
+          });
+      }
+  });
 });
