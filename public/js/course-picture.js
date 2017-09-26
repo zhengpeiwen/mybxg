@@ -12,6 +12,10 @@ define(['jquery','template','util','uploadify','jcrop','form'], function ($,temp
         success: function (data) {
             var html=template('pictureTpl',data.result);
             $('#pictureInfo').html(html);
+
+            //选中图片
+            var img=$('.preview img');
+            var nowCrop= null;//保证实例裁切的唯一性
             //处理封面上传
             $('#myfile').uploadify({
                 width:80,
@@ -33,15 +37,13 @@ define(['jquery','template','util','uploadify','jcrop','form'], function ($,temp
 
                 }
             });
-            //选中图片
-            var img=$('.preview img');
+
             //图片裁切功能
             $('#cropBtn').click(function () {
                 var flag=$(this).attr('data-flag');
                 console.log(flag);
                 if(flag){
                     //提交页面
-                    console.log(3);
                     $('#cropForm').ajaxSubmit({
                         type:'post',
                         url:'/api/course/update/picture',
@@ -49,7 +51,7 @@ define(['jquery','template','util','uploadify','jcrop','form'], function ($,temp
                         dataType:'json',
                         success: function (data) {
                             if(data.code==200){
-                                //location.href='/course/lesson?cs_id='+data.result.cs_id;
+                                location.href='/course/lesson?cs_id='+data.result.cs_id;
                             }
                         }
                     });
@@ -65,6 +67,8 @@ define(['jquery','template','util','uploadify','jcrop','form'], function ($,temp
                 img.Jcrop({
                    aspectRatio:2
                 }, function (){
+                    nowCrop &&  nowCrop.destroy();//销毁当前实例
+                    nowCrop=this;
                 $('.thumb').html('');
                     //显示缩略图
                     this.initComponent('Thumbnailer',{width:240,height:120,mythumb:'.thumb'});
