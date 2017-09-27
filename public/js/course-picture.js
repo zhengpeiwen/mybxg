@@ -69,7 +69,7 @@ define(['jquery','template','util','uploadify','jcrop','form'], function ($,temp
                 }, function (){
                     nowCrop &&  nowCrop.destroy();//销毁当前实例
                     nowCrop=this;
-                $('.thumb').html('');
+                //$('.thumb').html('');
                     //显示缩略图
                     this.initComponent('Thumbnailer',{width:240,height:120,mythumb:'.thumb'});
 
